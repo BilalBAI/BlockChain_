@@ -1,8 +1,11 @@
 # BlockChain_Projects
 ## ETHBarrierOptions
-ETHBarrierOptions is smart contract based on a ChainLink Vanilla Option example: [Build a DeFi Call Option Exchange With Chainlink Price Feeds](https://blog.chain.link/defi-call-option-exchange-in-solidity/)
+ETHBarrierOptions is smart contract based on the study of a ChainLink Vanilla Option example: [Build a DeFi Call Option Exchange With Chainlink Price Feeds](https://blog.chain.link/defi-call-option-exchange-in-solidity/)
 
 This project implements a ETH Knock-out Barrier Call Options which gives the buyer the right, but not the obligation, to purchase ETH at a predetermined amount and strike price, if the ETH price does not go below a specified knockout level during the option's life.
+
+### ENV
+This smart contract is based on Rinkeby Test Net.  [Get Rinkeby ETH](https://rinkebyfaucet.com/)
 
 ### Functions
 * getEthPrice():  get current ETH price in USD without decimals
