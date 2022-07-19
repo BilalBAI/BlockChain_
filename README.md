@@ -11,8 +11,14 @@ This project implements a ETH Knock-out Barrier Call Options which gives the buy
 
 * buyOption(): buy an option by referring to the option ID.   The buyer should have enough ETH for premium and the option contract is not canceled/expired/knockedOut.
 
-* exercise():
+* exercise(): allow the buyer to exercise an option if it is not canceled/expired/knockedOut.
 
 * knockOutValidation(): validate if any existing options hit knockout level.  This function needs to be called periodically (e.g. every hour) which can be achieved in two ways:
   1. Centralized: The writers have potential incentives to schedule to run this function
-  2. Decentralized: The function can be registered on [Chainlink Upkeep App](https://keepers.chain.link/new-time-based)
+  2. Decentralized: The function can be registered on [Chainlink Upkeep App](https://keepers.chain.link/new-time-based) with a time-based trigger
+
+* cancelOption():  allow the writer the cancel the option and retrieve tockens if the option is not bought
+
+* retrieveExpiredFunds(): Allows writer to retrieve funds from an expired, non-exercised, non-canceled contract
+
+* getTimeStampNow():  Get the current timestamp in unix format
