@@ -5,13 +5,6 @@ import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/math/SafeMath.sol";
 
-
-// KeeperCompatible.sol imports the functions from both ./KeeperBase.sol and
-// ./interfaces/KeeperCompatibleInterface.sol
-//https://docs.chain.link/docs/chainlink-keepers/introduction/
-// import "@chainlink/contracts/src/v0.8/KeeperCompatible.sol";
-
-
 //Test Net: Rinkeby https://rinkebyfaucet.com/
 
 contract ETHBarrierOptions {
@@ -42,7 +35,7 @@ contract ETHBarrierOptions {
     }
     option[] public ethOpts;
 
-    //Kovan feeds: https://docs.chain.link/docs/reference-contracts
+    //Rinkeby feeds: https://docs.chain.link/docs/reference-contracts
     constructor() public {
         //ETH/USD Rinkeby feed
         ethFeed = AggregatorV3Interface(
@@ -78,6 +71,7 @@ contract ETHBarrierOptions {
 
     // This function needs to be registered on Chainlink Upkeep so that knvock 
     // https://keepers.chain.link/new-time-based
+    // https://docs.chain.link/docs/chainlink-keepers/introduction/
     function knockOutValidation() public {
         updatePrices();
         uint arrayLength = ethOpts.length;
@@ -90,7 +84,7 @@ contract ETHBarrierOptions {
         }
     }
 
-    //Allows user to write a covered call option
+    //Allows user to write a call option
     //Takes which token, a strike price(USD per token w/0 decimal places), premium(same unit as token), expiration time(unix) and how many tokens the contract is for
     function writeOption(
         uint256 strike,
@@ -122,7 +116,7 @@ contract ETHBarrierOptions {
         );
     }
 
-    //Purchase a call option, needs desired token, ID of option and payment
+    //Purchase a call option, needs ID of option and payment
     function buyOption(uint256 ID) public payable {
         updatePrices();
         require(
@@ -139,7 +133,7 @@ contract ETHBarrierOptions {
         ethOpts[ID].buyer = payable(msg.sender);
     }
 
-    //Exercise your call option, needs desired token, ID of option and payment
+    //Exercise the call option, needs ID of option and payment
     function exercise(uint256 ID) public payable {
         //If not expired and not already exercised, allow option owner to exercise
         //To exercise, the strike value*amount equivalent paid to writer (from buyer) and amount of tokens in the contract paid to buyer
@@ -183,8 +177,7 @@ contract ETHBarrierOptions {
         ethOpts[ID].canceled = true;
     }
 
-
-    //Allows writer to retrieve funds from an expired, non-exercised, non-canceled
+    //Allows writer to retrieve funds from an expired, non-exercised, non-canceled contract
     function retrieveExpiredFunds(uint256 ID)
         public
         payable
