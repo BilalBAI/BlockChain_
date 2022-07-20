@@ -12,7 +12,7 @@ This smart contract is based on Rinkeby Test Net.  [Get Rinkeby ETH](https://rin
 
 * writeOption(): write an option with strike, premium, days_to_expiry, knockOutLevel, and tknAmt specified.   Note strike, premium, knockOutLevel are all intergers without decimals.  The writer must have enough ETH for tknAmt.
 
-* buyOption(): buy an option by referring to the option ID.   The buyer should have enough ETH for premium and the option contract is not canceled/expired/knockedOut.
+* buyOption(): buy an option by referring to the option ID.   The buyer should have enough ETH for premium and the option contract is not canceled/expired/knockedOut/bought.
 
 * exercise(): allow the buyer to exercise an option if it is not canceled/expired/knockedOut.
 
