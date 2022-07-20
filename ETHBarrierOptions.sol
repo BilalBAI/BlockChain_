@@ -85,7 +85,7 @@ contract ETHBarrierOptions {
     }
 
     //Allows user to write a call option
-    //Takes which token, a strike price(USD per token w/0 decimal places), premium(same unit as token), expiration time(unix) and how many tokens the contract is for
+    //Takes a strike price(USD per token w/0 decimal places), premium(same unit as token), days to expiry, knockout level and how many tokens the contract is for
     function writeOption(
         uint256 strike,
         uint256 premium,
@@ -120,7 +120,7 @@ contract ETHBarrierOptions {
     function buyOption(uint256 ID) public payable {
         updatePrices();
         require(
-            !ethOpts[ID].canceled && !ethOpts[ID].knockedOut && ethOpts[ID].expiry > block.timestamp,
+            !ethOpts[ID].canceled && !ethOpts[ID].knockedOut && ethOpts[ID].expiry > block.timestamp && ethOpts[ID].buyer == address(0),
             "Option is canceled/expired/knockedOut and cannot be bought"
         );
         //Transfer premium payment from buyer
@@ -135,7 +135,7 @@ contract ETHBarrierOptions {
 
     //Exercise the call option, needs ID of option and payment
     function exercise(uint256 ID) public payable {
-        //If not expired and not already exercised, allow option owner to exercise
+        //If not expired, not knocked out and not already exercised, allow option owner to exercise
         //To exercise, the strike value*amount equivalent paid to writer (from buyer) and amount of tokens in the contract paid to buyer
         require(
             ethOpts[ID].buyer == msg.sender,
