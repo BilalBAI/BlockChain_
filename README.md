@@ -1,4 +1,4 @@
-# BlockChain_Projects
+# ETH-Barrier-Options
 ## ETHBarrierOptions
 ETHBarrierOptions is smart contract based on the study of a ChainLink Vanilla Option example: [Build a DeFi Call Option Exchange With Chainlink Price Feeds](https://blog.chain.link/defi-call-option-exchange-in-solidity/)
 
